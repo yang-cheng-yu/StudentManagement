@@ -15,7 +15,7 @@ This is a student management system client coded in `Java` with `Maven` using `J
 This is an app-image. No installation required
 Extract the `.zip` file and run `StudentManagement.exe`
 Everything required to run the software is bundled using `JPackage`
-### User Guide
+## User Guide
 ---
 ### GUI guide
 
