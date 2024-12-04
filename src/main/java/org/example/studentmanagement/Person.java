@@ -4,11 +4,11 @@
 // For “Programming 2” Section 1 – Fall 2024
 // --------------------------------------------------------
 
-package org.example;
+package org.example.studentmanagement;
 
-import java.util.ArrayList;
+abstract class Person {
+    protected String name;
+    protected char gender;
 
-public interface FileHandler {
-    void saveToFile(String fileName, ArrayList<Student> students);
-    ArrayList<Student> loadFromFile(String fileName);
+    abstract String getDescription();
 }

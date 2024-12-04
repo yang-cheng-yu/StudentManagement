@@ -4,7 +4,7 @@
 // For “Programming 2” Section 1 – Fall 2024
 // --------------------------------------------------------
 
-package org.example;
+package org.example.studentmanagement;
 
 import java.util.ArrayList;
 

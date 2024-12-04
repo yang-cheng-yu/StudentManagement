@@ -8,25 +8,23 @@
 NOTE: This is code from a previous project I adapted for this case.
  */
 
-package org.example;
+package org.example.studentmanagement;
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 public class Encryptor implements FileHandler {
 
-    private final static String key = "x";
+    private final static char key = 'x';
 
     // Encrypt with XOR
     public static String xorEncrypt(String input) {
 
-        char[] keyChars = key.toCharArray();
         char[] inputChars = input.toCharArray();
         char[] encryptedChars = new char[input.length()];
 
         for (int i = 0; i < input.length(); i++) {
-            encryptedChars[i] = (char) (inputChars[i] ^ keyChars[i % keyChars.length]);
+            encryptedChars[i] = (char) (inputChars[i] ^ key);
         }
 
         return new String(encryptedChars);
@@ -38,11 +36,11 @@ public class Encryptor implements FileHandler {
     }
 
     @Override
-    public void saveToFile(String fileName, ArrayList<Student> students) {
+    public void saveToFile(File file, ArrayList<Student> students) {
 
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(fileName))) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
             for (Student s : students) {
-                String data = s.getName() + "," + s.getGpa();
+                String data = s.getName() + "," + s.getGender() + "," + s.getGpa();
 
                 String encryptedData = xorEncrypt(data);
 
@@ -55,18 +53,22 @@ public class Encryptor implements FileHandler {
     }
 
     @Override
-    public ArrayList<Student> loadFromFile(String fileName) {
+    public ArrayList<Student> loadFromFile(File file) {
         ArrayList<Student> out = new ArrayList<>();
 
-        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = br.readLine()) != null) {
                 String decryptedLine = xorDecrypt(line);
                 String[] attributes = decryptedLine.split(",");
-                if (attributes.length == 2) {
+                if (attributes.length == 3) {
                     String name = attributes[0];
-                    double gpa = Double.parseDouble(attributes[1]);
-                    out.add(new Student(name, gpa));
+                    char gender = attributes[1].toUpperCase().charAt(0);
+                    if (gender != 'M' && gender != 'F') {
+                        return null;
+                    }
+                    double gpa = Double.parseDouble(attributes[2]);
+                    out.add(new Student(name, gender, gpa));
                 }
             }
         } catch (IOException e) {

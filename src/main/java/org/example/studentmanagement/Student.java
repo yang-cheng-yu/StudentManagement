@@ -4,21 +4,22 @@
 // For “Programming 2” Section 1 – Fall 2024
 // --------------------------------------------------------
 
-package org.example;
+package org.example.studentmanagement;
 
 public class Student extends Person{
 
     private int id;
     private double gpa;
-    public static int nextID = 1;
+    private static int nextID = 1;
 
     public Student () {
         id = nextID++;
     }
 
-    public Student (String name, double gpa) {
+    public Student (String name, char gender, double gpa) {
         id = nextID++;
         this.name = name;
+        this.gender = gender;
         this.gpa = gpa;
     }
 
@@ -35,6 +36,14 @@ public class Student extends Person{
         this.name = name;
     }
 
+    public char getGender() {
+        return gender;
+    }
+
+    public void setGender(char gender) {
+        this.gender = gender;
+    }
+
     public int getId() {
         return id;
     }
@@ -49,5 +58,13 @@ public class Student extends Person{
 
     public void setGpa(double gpa) {
         this.gpa = gpa;
+    }
+
+    public static int getNextID() {
+        return nextID;
+    }
+
+    public static void setNextID(int nextID) {
+        Student.nextID = nextID;
     }
 }
